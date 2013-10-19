@@ -3,11 +3,42 @@ CREATE DATABASE chat;
 USE chat;
 
 CREATE TABLE messages (
- /* Describe your table here.*/
+  ID int(11) NOT NULL auto_increment,
+  text TINYTEXT,
+  FOREIGN KEY (user_id)
+    REFERENCES user(id),
+  FOREIGN KEY (room_id)
+    REFERENCES room(id),
+  PRIMARY KEY (ID)
 );
 
-/* You can also create more tables, if you need them... */
+CREATE TABLE friends (
+  ID int(11) NOT NULL auto_increment,
+  FOREIGN KEY (follower_id)
+    REFERENCES user(id),
+  FOREIGN KEY (followed_id)
+    REFERENCES user(id),
+  PRIMARY KEY (ID)
+);
 
-/*  Execute this file from the command line by typing:
- *    mysql < schema.sql
- *  to create the database and the tables.*/
+CREATE TABLE rooms (
+  ID int(11) NOT NULL auto_increment,
+  NAME VARCHAR(255),
+  PRIMARY KEY (ID)
+);
+
+CREATE TABLE blocked (
+  ID int(11) NOT NULL auto_increment,
+  FOREIGN KEY (blocker_id)
+    REFERENCES user(id),
+  FOREIGN KEY (blocked_id)
+    REFERENCES user(id),
+  PRIMARY KEY (ID)
+);
+
+CREATE TABLE user(
+  ID int(11) NOT NULL auto_increment,
+  USERNAME VARCHAR(255),
+  PRIMARY KEY (ID)
+);
+ -- *    mysql < schema.sql
